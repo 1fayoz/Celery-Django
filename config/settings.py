@@ -124,6 +124,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CELERY_TIMEZONE = "Uzbekistan/Yashkent"
+CELERY_TIMEZONE = "Asia/Tashkent"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+   "GROUP-ATTENDANCE": {
+       'task': 'app.tasks.add',
+       'schedule': 20.0 ,      #crontab(hour="6", minute="00")
+       'args': (4,5)
+   }
+}
